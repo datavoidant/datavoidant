@@ -71,7 +71,7 @@
           <div class="card">
             <div class="card-body">
               <p class="card-title">Groups and Pages Analyzed</p>
-              <div class="table-responsive" style="height: 18rem;">
+              <div class="table-responsive" style="height: 16rem;">
 
 
               <!--31-->
@@ -88,11 +88,11 @@
         </div>
         <div class="col-md-6 grid-margin stretch-card">
           <div class="card">
-            <div class="card-body"  >
-              <p class="card-title" id="card-id-type" ></p>
+            <div class="card-body">
+              <p class="card-title" id="card-id-type"></p>
 
-              <div id==''>
-                <canvas id="bar-charts"></canvas>
+              <div id=='bar-chart-container' class='table-responsive'>
+                <canvas id="bar-charts" height="130"></canvas>
 
               </div>
 
@@ -143,36 +143,29 @@
           </div> <!--end col  that contains row 1, 2,3-->
 
 
-
-
-
-          <div class="col-md-4"><!--col 2 contains row 1, 2 3-->
+          <div class="col-md-4"><!--col 2 contains row 4,5,6-->
+              <div id="rt-85731d0952a70ad9cdff2a08aed600cf" data-floating="true" data-side="right" data-width="500" data-height="500"></div> <script src="https://rumbletalk.com/client/?OJalfj~:"></script>
             <div class="row"> <!--added row 1-->
-
-              <!--div class="col-md-12 grid-margin stretch-card">
-
-                <div >
-                  <div class="card-body" >
-                    <p class="card-title">    </p>
-                  </div>
-                </div>
-              </div-->
-
               <div class="col-md-12 grid-margin stretch-card">
-                <div class="row">
+
                 <div class="card">
-                  <div class="card-body" style="height: 56rem;">
-                    <p class="card-title">Chat</p>
+                  <div class="card-body" style="height: 55rem;">
+                    <p class="card-title">Shared Document</p>
 
 
-                      <div  style="width: 500px;" id="rt-85731d0952a70ad9cdff2a08aed600cf"></div> <script src="https://rumbletalk.com/client/?OJalfj~:"></script>
+                    <div style="height: 34rem;">
+                      <div id="doc" class="card-body">Write here </div>
+                      <div>
+                      </div>
+                    </div>
 
 
                   </div>
 
                 </div>
               </div>
-              </div>
+
+
 
 
             </div><!--end row 1 13-->
@@ -198,14 +191,10 @@
               </div>
             </div>
             <div class="col-md-6 grid-margin stretch-card">
-
               <div class="card bg-conservative d-flex align-items-center text-white" id='card-id-c-posts'>
 
 
-                <div class="bg-white" id="google_translate_element">
-
-
-                </div>
+                <div class="bg-white" id="google_translate_element"></div>
 
                 <script type="text/javascript">
                   function googleTranslateElementInit() {
@@ -215,37 +204,6 @@
                   }
                 </script>
                 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-                <div style="position:left;">
-                  <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal5">Help</button>
-                </div>
-                <!-- Modal -->
-                <div class="modal fade" id="myModal5" role="dialog">
-                  <div class="modal-dialog">
-
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Posts per Political Leaning</h4>
-                      </div>
-                      <div class="modal-body">
-                        <p>This section shows the posts per political leaning per topic.</p>
-                        <p>
-                          By using the drop down menu at the top of the section, you can select the different topics to explore.
-                          The below three section will then display the posts that were published by groups/pages from a conservative, neutral or liberal leaning.
-                          If you click on any section, you should see a scroll at the right that will allow you to explore more posts about any political leaning
-                          related to the selected topic.
-                        </p>
-                        <p> You can also translate the posts to any language using the drop down menu right above this button.
-                        </p>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                      </div>
-                    </div>
-
-                  </div>
-                </div> <!-- end Modal -->
                 <div class="card-body py-5">
                   <div align="center" id="title_table_c_posts"></div>
 
@@ -285,32 +243,6 @@
                     <p class="text-muted mb-0">Avg Sessions</p>
                   </div-->
                   <canvas id="pol_leaning" ></canvas>
-                  <div style="position:right;margin: 0 0 0 0;">
-                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Help</button>
-                  </div>
-                  <!-- Modal -->
-                  <div class="modal fade" id="myModal" role="dialog">
-                    <div class="modal-dialog">
-
-                      <!-- Modal content-->
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal">&times;</button>
-                          <h4 class="modal-title">Political Leaning Chart</h4>
-                        </div>
-                        <div class="modal-body">
-                          <p>This graph shows you the percentage of posts per political leaning per topic: Conservative/Liberal/Neutral.
-                          </p>
-                          <p>For example by hovering over the topic of Economy, we can see that 9% of posts are from a conservative leaning;
-                            82.67% are from a neutral leaning; and 8.33% are from a liberal political leaning.</p>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                      </div>
-
-                    </div>
-                  </div> <!-- end Modal -->
                 </div>
               </div>
             </div>
@@ -318,20 +250,22 @@
               <div class="card bg-neutral d-flex align-items-center text-white" id="card-id-n-posts">
                 <div class="card-body py-5">
                   <div align="center" id="title_table_n_posts"></div>
-
                   <div
                     class="d-flex flex-row align-items-center flex-wrap justify-content-md-center justify-content-xl-start py-1">
-                    <!--i class="mdi mdi-facebook text-white icon-lg"></i>
+                    <!--i class="mdi mdi-twitter text-white icon-lg"></i>
                     <div class="ml-3 ml-md-0 ml-xl-3">
-                      <h5 class="text-white font-weight-bold">2.62 Subscribers</h5>
+                      <h5 class="text-white font-weight-bold">3k followers</h5>
                       <p class="mt-2 text-white card-text">You main list growing</p>
                     </div-->
+
                     <div id="frequent_posts" class="table-responsive" style="height: 16rem;">
                       <table id="table_n_posts" class="table table-striped2 translate" style="table-layout: fixed; width:100%;">
                         <thead></thead>
                         <tbody></tbody>
                       </table>
                     </div>
+
+
                   </div>
                 </div>
               </div>
@@ -350,33 +284,6 @@
 
                   <div class="regional-chart-legend" id="audience-chart-legend"></div>
                   <canvas id="audience-chart"></canvas>
-                  <div style="position:left;margin: 0 0 0 0;">
-                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal4">Help</button>
-                  </div>
-                  <!-- Modal -->
-                  <div class="modal fade" id="myModal4" role="dialog">
-                    <div class="modal-dialog">
-
-                      <!-- Modal content-->
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal">&times;</button>
-                          <h4 class="modal-title">Engagement per Topic</h4>
-                        </div>
-                        <div class="modal-body">
-                          <p>This graph shows how much engagement each topic received in terms of comments and posts.</p>
-                          <p>
-                            For example by hovering over the topic Economy, we can se that it received 9.28% of the total comments for all topics.
-                            Meanwhile 14.35% of posts from all topics are about Economy
-                          </p>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                      </div>
-
-                    </div>
-                  </div> <!-- end Modal -->
                 </div>
               </div>
             </div>
@@ -476,7 +383,6 @@
   <!-- Custom js for this page-->
   <script src="js/dashboard.js"></script>
   <script src="js/appchat.js"></script>
-  <script src="js/app.js"></script>
   <script type="text/javascript" src="js/Topics.js"></script>
   <!-- End custom js for this page-->
 </body>
