@@ -8633,6 +8633,21 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+/*my code*/
+
+.hidden-hoverReveal {
+    display: none;
+}
+
+.active-hoverReveal{
+    display: block;
+}
+
+.summarized_topics{
+  display: none;
+}
+/*my code*/
+
 article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   display: block;
 }
@@ -10071,6 +10086,17 @@ pre code {
   padding: 1.25rem 0.9375rem;
   vertical-align: top;
   border-top: 1px solid #f3f3f3;
+}
+
+.table_small_line {
+  padding: 0.25rem 0.25rem;
+  vertical-align: top;
+  border-top: 1px solid #f3f3f3;
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #001737;
+  font-family: "Source Sans Pro", sans-serif;
+
 }
 
 .table thead th {
@@ -13037,11 +13063,7 @@ input[type="button"].btn-block {
   border-top: 0;
 }
 
-.card-body {
-  flex: 1 1 auto;
-  min-height: 1px;
-  padding: 1.25rem;
-}
+
 
 .card-title {
   margin-bottom: 0.75rem;
@@ -18464,15 +18486,19 @@ input:focus {
 }
 
 .bg-neutral {
-  background: #99A3A4;
+  border-color: #99A3A4;
+  border-width: 20px;
 }
 
 .bg-liberal {
-  background: #1600FF;
+  border-color: #1600FF;
+  border-width: 20px;
 }
 
 .bg-conservative {
-  background: #CC0000;
+  border-color: #CC0000;
+  border-width: 20px;
+
 }
 .bg-white {
   background: #ffffff;
@@ -19708,8 +19734,18 @@ code {
   padding: 1.4rem 1.875rem;
 }
 
+.card .card-body2 {
+  padding: 0rem 0rem;
+}
+
 .card .card-body + .card-body {
   padding-top: 1rem;
+}
+
+.card-body {
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1.25rem;
 }
 
 .card .card-title {
@@ -20483,7 +20519,7 @@ dl li {
 }
 
 .navbar-fixed-top .main-panel {
-  padding-top: 262px;
+  padding-top: 102px;
 }
 
 .documentation.navbar-fixed-top .main-panel {
@@ -20737,7 +20773,7 @@ dl li {
   -ms-transition: background 0.25s ease;
   background: url(../images/other/navbar-cover.jpg) center center no-repeat;
   background-size: cover;
-  height: 262px;
+  height: 102px;
   width: auto;
 }
 
