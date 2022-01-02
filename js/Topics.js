@@ -26,7 +26,7 @@ function process_json(jsonData) {
 function populate(dom_elem, item, idx, class_name, dom_summary, topic) {
   //populates all the tables except the stats
 
-  for (i = 0; i < item.length; i++) {
+  for (i = 0; i < item[idx].length; i++) {
     if (typeof item[idx][i] !== "undefined") {
 
       $(dom_elem).append('<tr><td class="' + class_name + '"> ' + item[idx][i] + '</td></tr>');
