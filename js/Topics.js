@@ -499,8 +499,8 @@ function DrawBubbleChart(jsonData, idx) {
     ]
   };
 
-  var diameter = 400 / 1.2;
-  var height = 300 / 1.2;
+  var diameter = 420;
+  var height = 420;
   var color = d3.scaleOrdinal(d3.schemeCategory20);
 
   var bubble = d3.pack(dataset)
@@ -551,7 +551,7 @@ function DrawBubbleChart(jsonData, idx) {
     .attr("dy", ".2em")
     .style("text-anchor", "middle")
     .text(function(d) {
-      return d.data.Name.substring(0, d.r / 3);
+      return d.data.Name.substring(0, d.r / 2);
     })
     .attr("font-family", "sans-serif")
     .attr("font-size", function(d) {
@@ -567,7 +567,7 @@ function DrawBubbleChart(jsonData, idx) {
     })
     .attr("font-family", "Gill Sans", "Gill Sans MT")
     .attr("font-size", function(d) {
-      return d.r / 3;
+      return d.r / 2;
     })
     .attr("fill", "white");
 
