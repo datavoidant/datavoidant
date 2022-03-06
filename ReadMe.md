@@ -14,4 +14,4 @@ enables a new design space where individuals can collaboratively make sense of t
 devise strategies for uniquely contributing information to their ecosystem to prevent disinformation together
 
 
-<img src="https://drive.google.com/file/d/1vXN6gz9WKVmUJ_J-yGtut4ifeNPMUtWQ/view?usp=sharing" alt="Datavoidant">
+
