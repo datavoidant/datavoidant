@@ -45,7 +45,7 @@ function populate_groups(dom_elem, item, idx, class_name, data_pages, dom_summar
 
     dict_pages[obj.index] = obj.Type
   }
-  console.log('console log page type ', data_pages[0])
+//  console.log('console log page type ', data_pages[0])
   //classify pages from topic 0
   //  console.log("PRINTING dictionary", dict_pages[obj.index])
   var media = 0,
@@ -76,7 +76,7 @@ function populate_groups(dom_elem, item, idx, class_name, data_pages, dom_summar
           }
         }
 
-        console.log("type 0", dict_pages[item[idx][i]])
+      //  console.log("type 0", dict_pages[item[idx][i]])
 
       }
     }
@@ -91,7 +91,7 @@ function populate_groups(dom_elem, item, idx, class_name, data_pages, dom_summar
   //}
   //}
 
-  console.log("types: media ", media, " public ", public, " pol ", political)
+  //console.log("types: media ", media, " public ", public, " pol ", political)
   $(dom_summary).append('<table><tr><td>The top groups/pages related to: ' + topic.toUpperCase().bold() + ', reveal that: </td></tr><tr><td>- ' +
     media.toString().bold() + ' are from news media; </td></tr><tr>' +
     '<td>- ' + public.toString().bold() + ' are from the general public; </td></tr><tr>' +
@@ -141,7 +141,7 @@ function show_menu(jsonData, data_pages) {
     keys = tps[1];
   var select = document.getElementById("select_topic");
   //  import { id } from './app.js'
-  console.log("here is the data ", topics);
+//  console.log("here is the data ", topics);
   //print("trying to get url",id);
 
   /*gets all the groups*/
@@ -161,18 +161,25 @@ function show_menu(jsonData, data_pages) {
   /**/
   /*gets posts conservative*/
   let con_post = get_values(result[14])
-  const con__p_content = con_post[0],
+  let con__p_content = con_post[0],
     con_p_keys = con_post[1];
+  con__p_content = con__p_content.slice(0, 10);
+  con_p_keys = con_p_keys.slice(0, 10);
+
   /**/
   /*gets posts neutral*/
   let neu_post = get_values(result[15])
-  const neu_p_content = neu_post[0],
+  let neu_p_content = neu_post[0],
     neu_p_keys = neu_post[1];
+  neu_p_content = neu_p_content.slice(0, 10);
+  neu_p_keys = neu_p_keys.slice(0, 10);
   /**/
   /*gets posts nliberal*/
   let lib_post = get_values(result[16])
-  const lib_p_content = lib_post[0],
+  let lib_p_content = lib_post[0],
     lib_p_keys = lib_post[1];
+  lib_p_content = lib_p_content.slice(0, 10);
+  lib_p_keys = lib_p_keys.slice(0, 10);
   /**/
   var option = '';
   selec = true;
@@ -308,6 +315,7 @@ function show_menu(jsonData, data_pages) {
     $("#table_bot_keywords").empty();
     $("#table_stats").empty();
     $("#audience-chart").empty();
+    $("#task-chart").empty();
     $("#regional-chart").empty();
 
     $("#table_leaning").empty();
@@ -383,13 +391,13 @@ function DrawBubbleChart(jsonData, idx) {
   let totposts = get_values(result[0]);
   const tot_n = totposts[0],
     tot_keys = totposts[1];
-  console.log("totals", tot_n)
+//  console.log("totals", tot_n)
 
   //each_topic_result
   let labs = get_values(result[2]);
   const labels = labs[0],
     labels_keys = labs[1];
-  console.log("labels", labels)
+//  console.log("labels", labels)
   //data 8-1
   //conservative
   let cons = get_values(result[11]);
@@ -650,13 +658,13 @@ function DrawPolLeaningChart(jsonData, idx) {
   let totposts = get_values(result[0]);
   const tot_n = totposts[0],
     tot_keys = totposts[1];
-  console.log("totals", tot_n)
+//  console.log("totals", tot_n)
 
   //each_topic_result
   let labs = get_values(result[2]);
   const labels = labs[0],
     labels_keys = labs[1];
-  console.log("labels", labels)
+//  console.log("labels", labels)
   //data 8-1
   //conservative
   let cons = get_values(result[11]);
@@ -851,8 +859,8 @@ function calculate_void(jsonData, idx, topic) {
   const result = process_json(jsonData);
   //stores the values of media posts, citizens, and politics
   const array_types = [];
-  console.log("data being recieved (idx,topic): ", idx, topic)
-  console.log("distribution", result[19])
+  //console.log("data being recieved (idx,topic): ", idx, topic)
+  //console.log("distribution", result[19])
   //posts per type, media, political, citizens
 
   //get page groups in dataset
@@ -860,12 +868,12 @@ function calculate_void(jsonData, idx, topic) {
   const tot_types = pp_type[0],
     tot_type_keys = pp_type[1]; //this is all the pages
 
-  console.log('types', tot_types)
+  //console.log('types', tot_types)
   for (i = 0; i < tot_types[idx].length; i++) {
     array_types.push(tot_types[idx][i])
 
   }
-  console.log("array types", array_types)
+//  console.log("array types", array_types)
 
   // [politics,media, citizens]
   //  var num_political_posts = array_data[0];
@@ -923,12 +931,12 @@ function DrawBarChart(jsonData, idx) {
   const tot_types = pp_type[0],
     tot_type_keys = pp_type[1]; //this is all the pages
 
-  console.log('types', tot_types)
+  //console.log('types', tot_types)
   for (i = 0; i < tot_types[idx].length; i++) {
     array_types.push(tot_types[idx][i])
 
   }
-  console.log("array types", array_types)
+//  console.log("array types", array_types)
 
 
 
@@ -1269,7 +1277,7 @@ function DrawTopicsChart(jsonData) {
   let botp = get_values(result[17])
   var perc_bot = botp[0],
     bot_keys = botp[1];
-  console.log("perc", perc_bot)
+//  console.log("perc", perc_bot)
   perc_bot = perc_bot.map(function(x) {
     return (x * 100).toFixed(2);
   })
@@ -1282,7 +1290,7 @@ function DrawTopicsChart(jsonData) {
       taskChart.destroy();
     }
     var taskChart = new Chart(taskChartCanvas, {
-      type: 'bar',
+      type: 'horizontalBar',
       data: {
         labels: labels,
         datasets: [{
@@ -1327,24 +1335,40 @@ function DrawTopicsChart(jsonData) {
               padding: 10
             }
           }],
-          xAxes: [{
-            display: true,
-            stacked: false,
-            categoryPercentage: 1,
-            ticks: {
-              display: false,
-              beginAtZero: false,
-              display: true,
-              padding: 10,
-              fontSize: 11
-            },
-            gridLines: {
-              color: "rgba(0, 0, 0, 0)",
-              display: true
-            },
-            position: 'bottom',
-            barPercentage: 0.7
-          }]
+        //  xAxes: [{
+      //      display: true,
+      //      stacked: false,
+      //      categoryPercentage: 1,
+      //      ticks: {
+      //        display: false,
+      //        beginAtZero: false,
+      //        display: true,
+      //        padding: 10,
+      //        fontSize: 11
+      //      },
+      //      gridLines: {
+      //        color: "rgba(0, 0, 0, 0)",
+      //        display: true
+      //      },
+      //      position: 'bottom',
+      //      barPercentage: 0.7
+      //    }]
+      xAxes: [{
+        stacked: false,
+        ticks: {
+          min: 0, //Remove this if you use type of char 'bar' instead of 'horizontalbar'
+          max: 100,
+          beginAtZero: true,
+          fontColor: "#b1b0b0",
+          fontSize: 10
+        },
+        gridLines: {
+          color: "rgba(0, 0, 0, 0)",
+          display: false
+        },
+        barPercentage: .9,
+        categoryPercentage: .7,
+      }]
         },
         legend: {
           display: false
