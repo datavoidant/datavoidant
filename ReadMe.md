@@ -1,4 +1,4 @@
-Datavoidant
+**Datavoidant**
 
 A new type of political disinformation targeting underrepresented populations, e.g., the Latinx community, has been on the rise. Such
 disinformation has been weaponizing the limited information (data voids) that exists about political topics and certain underrepresented
