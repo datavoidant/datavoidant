@@ -1,73 +1,12 @@
-Steps to run:
-
-See Live demo :
-
-  ## https://collaborative-texteditor.herokuapp.com
-  
- copyand paste the same address on browser/browser-abs
- 
-  
-  
-## Step 1:
-https://dashboard.pusher.com/ create app using this url  just have to create an account and then create the app
-
-## Step 2: 
-Now select the app you have created ,and then select app settings and
-## Enable Client Events  
-so you can listen to client events
-
-## Step 3:
-
-git clone https://github.com/KumailHussain/Calloborative-text-editor.git
-
-## Step 4:
-
-Insert your api key for client side
-
-path= Calloborative-text-editor/js/app.js 
-
-Replace this line according to Your app  (select javascript as client)
-
-     var pusher = new Pusher('INSERT_YOUR_KEY_HERE', {
-     
-      cluster: 'Your Api Cluster',
-      
-      encrypted: true
-      
-    });
-        
-      you will find key from your app dashbaord 
-      
-## Step 5:
-
-Insert your api key for Server side
-
-path= Calloborative-text-editor/server.js
-
-Replace this line according to Your app (select node as server)
-
-     var pusher = new Pusher({
-
-      appId: 'INSERT_YOUR_APP_ID_HERE',
-  
-       key: 'INSERT_YOUR_KEY_HERE',
-  
-      secret:  'INSERT_YOUR_SECRET_HERE' 
-  
-     });
-
-
-## Step 6:
-
-cd Calloborative text editor
-
-## Step 7:
-
-npm install
-     
-## Step 8:
-npm start
-
-You can now see the demo
-# datavoidant
-# datavoidant
+A new type of political disinformation targeting underrepresented populations, e.g., the Latinx community, has been on the rise. Such
+disinformation has been weaponizing the limited information (data voids) that exists about political topics and certain underrepresented
+communities to promote political lies. The novel nature of such disinformation has made it difficult for researchers to counter. In
+this paper, we present a system to identify and address political data voids within underrepresented communities. Armed with an
+interview study indicating that independent news media has the potential of addressing these data voids, we designed the intelligent
+system: Datavoidant. Datavoidant introduces a novel design space that focuses on providing independent journalists with a collective
+understanding of data voids to then facilitate generating content to cover the voids. We performed a user interface evaluation with
+independent news media journalists (N=22). Journalists reported that Datavoidant’s features allowed them to more rapidly and easily
+have a sense of what was taking place in the information ecosystem to address data voids; they also reported feeling more confident
+about the content they created and the unique perspectives they proposed to cover the voids.We finish by discussing how Datavoidant
+enables a new design space where individuals can collaboratively make sense of their information ecosystem, and can proactively
+devise strategies for uniquely contributing information to their ecosystem to prevent disinformation together
