@@ -15,3 +15,4 @@ devise strategies for uniquely contributing information to their ecosystem to pr
 
 
 
+<img src="images/datavoidant.png" alt="Italian Trulli">
