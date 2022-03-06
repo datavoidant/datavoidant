@@ -12,3 +12,6 @@ have a sense of what was taking place in the information ecosystem to address da
 about the content they created and the unique perspectives they proposed to cover the voids.We finish by discussing how Datavoidant
 enables a new design space where individuals can collaboratively make sense of their information ecosystem, and can proactively
 devise strategies for uniquely contributing information to their ecosystem to prevent disinformation together
+
+
+<img src="https://drive.google.com/file/d/1vXN6gz9WKVmUJ_J-yGtut4ifeNPMUtWQ/view?usp=sharing" alt="Datavoidant">
