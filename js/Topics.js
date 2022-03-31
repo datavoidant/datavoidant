@@ -45,7 +45,7 @@ function populate_groups(dom_elem, item, idx, class_name, data_pages, dom_summar
 
     dict_pages[obj.index] = obj.Type
   }
-//  console.log('console log page type ', data_pages[0])
+  //  console.log('console log page type ', data_pages[0])
   //classify pages from topic 0
   //  console.log("PRINTING dictionary", dict_pages[obj.index])
   var media = 0,
@@ -56,7 +56,7 @@ function populate_groups(dom_elem, item, idx, class_name, data_pages, dom_summar
     if (typeof item[idx][i] !== "undefined") {
 
       // get info about the tipe of the media
-    //  console.log("page 0", item[idx][i])
+      //  console.log("page 0", item[idx][i])
       if (item[idx][i] in dict_pages) {
 
 
@@ -76,7 +76,7 @@ function populate_groups(dom_elem, item, idx, class_name, data_pages, dom_summar
           }
         }
 
-      //  console.log("type 0", dict_pages[item[idx][i]])
+        //  console.log("type 0", dict_pages[item[idx][i]])
 
       }
     }
@@ -141,7 +141,7 @@ function show_menu(jsonData, data_pages) {
     keys = tps[1];
   var select = document.getElementById("select_topic");
   //  import { id } from './app.js'
-//  console.log("here is the data ", topics);
+  //  console.log("here is the data ", topics);
   //print("trying to get url",id);
 
   /*gets all the groups*/
@@ -191,7 +191,7 @@ function show_menu(jsonData, data_pages) {
       $("#title_table_n_posts").append('Neutral Posts Topic: ' + topics[i]);
       $("#title_table_l_posts").append('Liberal Posts Topic: ' + topics[i]);
       $("#card-id-groups").append('Frequent Groups/Pages Topic: ' + topics[i]);
-      $("#card-id-type").append('Type of groups/pages generating content for topic: ' + topics[i]);
+      $("#card-id-type").append('Type of Groups/Pages generating content for topic: ' + topics[i]);
       $("#card-id-keywords").append('Frequent Bots Keywords Topic: ' + topics[i]);
       selec = false;
     } else {
@@ -207,11 +207,11 @@ function show_menu(jsonData, data_pages) {
   let pages = get_values(result[4]);
   const pages_names = pages[0],
     pages_keys = pages[1]; //this is all the pages
-//  console.log("pages per group", pages_names)
+  //  console.log("pages per group", pages_names)
   var merged_pages = [].concat.apply([], pages_names);
   var uniq_pages = [...new Set(merged_pages)];
   //console.log("uniq pages per group", uniq_pages)
-//  console.log(merged_pages);
+  //  console.log(merged_pages);
   ///
   let labs = get_values(result[2]);
   const labels = labs[0],
@@ -230,9 +230,14 @@ function show_menu(jsonData, data_pages) {
   var perc_comments = cms[0],
     comm_keys = cms[1];
   //engagement_percentage
-  let engp = get_values(result[10])
-  var perc_eng = engp[0],
-    eng_keys = engp[1];
+  let shares = get_values(result[10]) //share percentage
+  var perc_shares = shares[0],
+    eng_keys = shares[1];
+
+  perc_shares = perc_shares.map(function(x) {
+    return (x * 100).toFixed(2);
+  })
+  console.log("shares", perc_shares);
 
   let botp = get_values(result[17])
   var perc_bot = botp[0],
@@ -243,6 +248,9 @@ function show_menu(jsonData, data_pages) {
   perc_posts = perc_posts.map(function(x) {
     return (x * 100).toFixed(2);
   })
+
+
+
   perc_likes = perc_likes.map(function(x) {
     return (x * 100).toFixed(2);
   })
@@ -250,9 +258,14 @@ function show_menu(jsonData, data_pages) {
 
     return (x * 100).toFixed(2);
   })
-  perc_eng = perc_eng.map(function(x) {
-    return (x * 100).toFixed(2);
-  })
+
+
+
+
+
+  //  perc_eng = perc_eng.map(function(x) {
+  //    return (x * 100).toFixed(2);
+  //  })
 
 
   perc_bot = perc_bot.map(function(x) {
@@ -282,7 +295,7 @@ function show_menu(jsonData, data_pages) {
   populate_stats('#table_stats', 'Perc. Posts', perc_posts, 0)
   populate_stats('#table_stats', 'Perc. Likes', perc_likes, 0)
   populate_stats('#table_stats', 'Perc. Comments', perc_comments, 0)
-  populate_stats('#table_stats', 'Perc. Engagement', perc_eng, 0)
+  populate_stats('#table_stats', 'Perc. shares', perc_shares, 0)
   populate_stats('#table_stats', 'Perc. Bots', perc_bot, 0)
 
   //Add percentage comments of topic and percentage of engagement
@@ -307,6 +320,8 @@ function show_menu(jsonData, data_pages) {
   ///Here you get the index of the group that was chosen
   $('#select_topic').on('change', function() {
     //Empty the values of the cards one another option is selected
+
+    $
     $("#bar-charts").empty();
     //  $("#bubblechart").empty();
     $("#table_groups").empty();
@@ -391,13 +406,13 @@ function DrawBubbleChart(jsonData, idx) {
   let totposts = get_values(result[0]);
   const tot_n = totposts[0],
     tot_keys = totposts[1];
-//  console.log("totals", tot_n)
+  //  console.log("totals", tot_n)
 
   //each_topic_result
   let labs = get_values(result[2]);
   const labels = labs[0],
     labels_keys = labs[1];
-//  console.log("labels", labels)
+  //  console.log("labels", labels)
   //data 8-1
   //conservative
   let cons = get_values(result[11]);
@@ -451,6 +466,7 @@ function DrawBubbleChart(jsonData, idx) {
     "children": [{
         "Name": labels[0],
         "Count": sum_label_0
+
       },
       {
         "Name": labels[1],
@@ -504,68 +520,221 @@ function DrawBubbleChart(jsonData, idx) {
         "Count": sum_label_10
       }
 
-    ]
+    ],
   };
 
-  var diameter = 420;
-  var height = 420;
-  var color = d3.scaleOrdinal(d3.schemeCategory20);
+  //var data = JSON.parse(dataset.children);
+  console.log("dataset", typeof dataset.children);
+  //order the bubbles according to color
+  function sortByProperty(property) {
+    return function(a, b) {
+      if (a[property] > b[property])
+        return 1;
+      else if (a[property] < b[property])
+        return -1;
 
-  var bubble = d3.pack(dataset)
-    .size([diameter, height])
-    .padding(0.1);
+      return 0;
+    }
+  };
+  dataset.children.sort(sortByProperty("Count"));
+  console.log("dataset", dataset);
 
-  var svg = d3.select("#bubblechart")
-    .append("svg")
-    .attr("width", diameter)
-    .attr("height", height)
-  //  .attr('display','inline-block')
-    .attr("align", "center");
-    //.attr("preserveAspectRatio", "xMinYMin meet")
-    //.attr("viewBox", "0 0 300 300")
-    //.classed("svg-content", true);
 
-  var nodes = d3.hierarchy(dataset)
+   var diameter = 600//,
+  //   color = d3.scaleOrdinal(d3.schemeCategory20c);
+  //
+  // var colorScale = d3.scaleLinear()
+  //   .domain([0, d3.max(dataset.children, function(d) {
+  //     return d.Count;
+  //   })])
+  //   .range(["rgb(46, 73, 123)", "rgb(71, 187, 94)"]);
+
+
+  var bubble = d3.pack()
+    .size([diameter, diameter])
+    .padding(1);
+
+  var margin = {
+    left: 10,
+    right: 130,
+    top: 0,
+    bottom: 0
+  }
+
+  // var zoom = d3.zoom()
+  // .scaleExtent([1, 3])
+  // .on("zoom", zoomed);
+
+
+
+
+//   function zoomed() {
+// // var toModify = //d3.select('#bubblechart')
+//   svg.attr("transform", d3.event.transform);
+// }
+
+
+
+//
+//tooltipPosition
+// -1- Create a tooltip div that is hidden by default:
+  var tooltip = d3.select("#bubblechart")
+    .append("div")
+      .style("opacity", 0)
+      .attr("class", "tooltip")
+      .style("background-color", "#323232")
+      .style("border-radius", "5px")
+      .style("padding", "10px")
+      .style("color", "white")
+
+  // -2- Create 3 functions to show / update (when mouse move but stay on same circle) / hide the tooltip
+  var showTooltip = function(d) {
+    tooltip
+      .transition()
+      .duration(200)
+    tooltip
+      .style("opacity", 1)
+      .html(d.data.Name + ": "+d.data.Count)
+
+      .style("left", (d3.mouse(this)[0]+30) + "px")
+      .style("top", (d3.mouse(this)[1]+30) + "px")
+  }
+  var moveTooltip = function(d) {
+    tooltip
+      .style("left", (d3.mouse(this)[0]+30) + "px")
+      .style("top", (d3.mouse(this)[1]+30) + "px")
+  }
+  var hideTooltip = function(d) {
+    tooltip
+      .transition()
+      .duration(200)
+      .style("opacity", 0)
+  }
+//toooltip
+
+
+  var svg = d3.select('#bubblechart').append('svg')
+    .attr('viewBox', '0 0 ' + (diameter + margin.right) + ' ' + diameter)
+    .attr('width', (diameter + margin.right))
+    .attr('height', diameter)
+    .attr('class', 'chart-svg');
+
+
+
+  var root = d3.hierarchy(dataset)
     .sum(function(d) {
       return d.Count;
-    });
-
-  var node = svg.selectAll(".node")
-    .data(bubble(nodes).descendants())
-    .enter()
-    .filter(function(d) {
-      return !d.children
     })
-    .append("g")
-    .attr("class", "node")
-    .attr("transform", function(d) {
-      return "translate(" + d.x + "," + d.y + ")";
+    .sort(function(a, b) {
+      return b.Count - a.Count;
     });
 
-  node.append("title")
-    .text(function(d) {
-      return d.Name + ": " + d.Count;
+  bubble(root);
+
+  var node = svg.selectAll('.node')
+    .data(root.children)
+    .enter()
+    .append('g').attr('class', 'node')
+    .attr('transform', function(d) {
+      return 'translate(' + d.x + ' ' + d.y + ')';
+    })
+    .append('g').attr('class', 'graph')
+    .on("mouseover", showTooltip )
+.on("mousemove", moveTooltip )
+.on("mouseleave", hideTooltip )
+
+
+
+//Zoom settings
+
+    var zoom = d3.zoom()
+    .scaleExtent([1, 1.1])
+    .on("zoom", function() {
+        var e = d3.event.transform,
+          tx = Math.min(0, Math.max(e.x, diameter/2 - diameter/2 * e.k)),
+        ty = Math.min(0, Math.max(e.y, diameter/2 - diameter/2 * e.k));
+           svg.attr("transform", [
+        "translate(" + [tx, ty] + ")",
+        "scale(" + e.k + ")"
+      ].join(" "));
     });
+
+    d3.select("svg")
+    .call(zoom);
+
+
+///
+
+
+// here select the first G element under SVG as event listener.
+
 
   node.append("circle")
     .attr("r", function(d) {
       return d.r;
     })
+    // .style("fill", function(d) {
+    //   return color(d.data.Name);
+    // });
     .style("fill", function(d, i) {
-      return color(i);
-    });
+
+      // return color(i);
+      if (d.data.Count <= 1000) {
+        return "#DB69AA" //,color(d.data.Name)
+
+      } else {
+        return "#d0d0d0" //, color(d.data.Name)//
+      }
+
+
+    }
+
+
+  );
+
+
+
+
+
+  // node.append("text")
+  //   .attr("dy", ".2em")
+  //   .style("text-anchor", "middle")
+  //   .text(function(d) {
+  //     return d.data.Name.substring(0, d.r / 3);
+  //   })
+  //   .attr("font-family", "sans-serif")
+  //   .attr("font-size", function(d) {
+  //     return d.r / 3;
+  //   })
+  //   .style("fill", "#402F2F");
+
+  // node.append("text")
+  //   .attr("dy", "1.3em")
+  //   .style("text-anchor", "middle")
+  //   .text(function(d) {
+  //     return d.data.Count;
+  //   })
+  //   .attr("font-family", "Gill Sans", "Gill Sans MT")
+  //   .attr("font-size", function(d) {
+  //     return d.r / 2;
+  //   })
+  //   .style("fill", "#402F2F");
+
+
+//-----------
+
 
   node.append("text")
     .attr("dy", ".2em")
     .style("text-anchor", "middle")
     .text(function(d) {
-      return d.data.Name.substring(0, d.r / 2);
+      return d.data.Name.substring(0, d.r / 3);
     })
-    .attr("font-family", "sans-serif")
+    .attr("font-family", "Gill")
     .attr("font-size", function(d) {
       return d.r / 3;
     })
-    .attr("fill", "white");
+    .attr("fill", "#402F2F");
 
   node.append("text")
     .attr("dy", "1.3em")
@@ -573,43 +742,207 @@ function DrawBubbleChart(jsonData, idx) {
     .text(function(d) {
       return d.data.Count;
     })
-    .attr("font-family", "Gill Sans", "Gill Sans MT")
+    .attr("font-family", "Gill", "Gill Sans MT")
     .attr("font-size", function(d) {
       return d.r / 2;
     })
-    .attr("fill", "white");
-
-  d3.select(self.frameElement)
-    .style("height", height + "px");
+    .attr("fill", "#402F2F");
 
 
 
+  // node.append("text")
+  //        .text(function(d) {return d.children ? "" : d.data.Count ;})
+  //        .attr("text-anchor", "middle")
+  //        .attr("class", "nodetext")
+  //        .attr('color', 'black')
+  //        .attr('font-size', 15);
 
-  var color = d3.scaleOrdinal(d3.schemeCategory20);
+  // Handmade legend
+  // svg.append("circle").attr("cx",600).attr("cy",20).attr("r", 6).style("fill", "#B3B3B3")
+  // svg.append("text").attr("x", 620).attr("y", 20).text("economy").style("font-size", "15px").attr("alignment-baseline","middle").style('fill', '#000')
+  // svg.append("circle").attr("cx",600).attr("cy",40).attr("r", 6).style("fill", "#B3B3B3")
+  // svg.append("text").attr("x", 620).attr("y", 40).text("healthcare").style("font-size", "15px").attr("alignment-baseline","middle").style('fill', '#000')
+  // svg.append("circle").attr("cx",600).attr("cy",60).attr("r", 6).style("fill", "#B3B3B3")
+  // svg.append("text").attr("x", 620).attr("y", 60).text("coronavirus").style("font-size", "15px").attr("alignment-baseline","middle").style('fill', '#000')
+  // svg.append("circle").attr("cx",600).attr("cy",80).attr("r", 6).style("fill", "#B3B3B3")
+  // svg.append("text").attr("x", 620).attr("y", 80).text("crime").style("font-size", "15px").attr("alignment-baseline","middle").style('fill', '#000')
+  // svg.append("circle").attr("cx",600).attr("cy",100).attr("r", 6).style("fill", "#B3B3B3")
+  // svg.append("text").attr("x", 620).attr("y", 100).text("supreme court").style("font-size", "15px").attr("alignment-baseline","middle").style('fill', '#000')
+  // svg.append("circle").attr("cx",600).attr("cy",120).attr("r", 6).style("fill", "#B3B3B3")
+  // svg.append("text").attr("x", 620).attr("y", 120).text("inmigration").style("font-size", "15px").attr("alignment-baseline","middle").style('fill', '#000')
+  // svg.append("circle").attr("cx",600).attr("cy",140).attr("r", 6).style("fill", "#B3B3B3")
+  // svg.append("text").attr("x", 620).attr("y", 140).text("gun policy").style("font-size", "15px").attr("alignment-baseline","middle").style('fill', '#000')
+  // svg.append("circle").attr("cx",600).attr("cy",160).attr("r", 6).style("fill", "#B3B3B3")
+  // svg.append("text").attr("x", 620).attr("y", 160).text("foreign policy").style("font-size", "15px").attr("alignment-baseline","middle").style('fill', '#000')
+  // svg.append("circle").attr("cx",600).attr("cy",180).attr("r", 6).style("fill", "#DB69AA")
+  // svg.append("text").attr("x", 620).attr("y", 180).text("abortion").style("font-size", "15px").attr("alignment-baseline","middle").style('fill', '#000')
+  // svg.append("circle").attr("cx",600).attr("cy",200).attr("r", 6).style("fill", "#DB69AA")
+  // svg.append("text").attr("x", 620).attr("y", 200).text("racism").style("font-size", "15px").attr("alignment-baseline","middle").style('fill', '#000')
+  // svg.append("circle").attr("cx",600).attr("cy",220).attr("r", 6).style("fill", "#DB69AA")
+  // svg.append("text").attr("x", 620).attr("y", 220).text("climate change").style("font-size", "15px").attr("alignment-baseline","middle").style('fill', '#000')
+  //
+  //
 
-  var bubble = d3.pack(dataset)
-    .size([diameter, height])
-    .padding(0);
-
-  var node = svg.selectAll(".node")
-    .data(bubble(nodes).descendants())
-    .enter()
-    .filter(function(d) {
-      return !d.children
-    })
-    .append("g")
-    .attr("class", "node")
-    .attr("transform", function(d) {
-      return "translate(" + d.x + "," + d.y + ")";
-    });
 
 
-  $("#bubblelegend").append('<tr><td>' + labels[0] + '</td><td>' + sum_label_0 + '</td><td>' + labels[1] + '</td><td>' + sum_label_1 + '</td></tr>');
-  $("#bubblelegend").append('<tr><td>' + labels[2] + '</td><td>' + sum_label_2 + '</td><td>' + labels[3] + '</td><td>' + sum_label_3 + '</td></tr>');
-  $("#bubblelegend").append('<tr><td>' + labels[4] + '</td><td>' + sum_label_4 + '</td><td>' + labels[5] + '</td><td>' + sum_label_5 + '</td></tr>');
-  $("#bubblelegend").append('<tr><td>' + labels[6] + '</td><td>' + sum_label_6 + '</td><td>' + labels[7] + '</td><td>' + sum_label_7 + '</td></tr>');
-  $("#bubblelegend").append('<tr><td>' + labels[8] + '</td><td>' + sum_label_8 + '</td><td>' + labels[9] + '</td><td>' + sum_label_9 + '</td></tr>');
-  $("#bubblelegend").append('<tr><td>' + labels[10] + '</td><td>' + sum_label_10 + '</td><td></td><td></td></tr>');
+  // var legendOrdinal = d3.legendColor()
+  //   .shape("path", d3.symbol().type(d3.symbolSquare).size(150)())
+  //   .shapePadding(10)
+  //   .scale(color);
+  //
+  // console.log("legenda",legendOrdinal)
+  //
+  // svg.select(".legendOrdinal")
+  //   .call(legendOrdinal);
+
+  // node.append("text")
+  //   .attr("dy", ".2em")
+  //   .style("text-anchor", "middle")
+  //   .text(function(d) {
+  //     return d.data.Name.substring(0, d.r / 2);
+  //   })
+  //   .attr("font-family", "sans-serif")
+  //   .attr("font-size", function(d) {
+  //     return d.r / 3;
+  //   })
+  //   .attr("fill", "#402F2F");
+
+  // node.append("text")
+  //   .attr("dy", "1.3em")
+  //   .style("text-anchor", "middle")
+  //   .text(function(d) {
+  //     return d.data.Count;
+  //   })
+  //   .attr("font-family", "Gill Sans", "Gill Sans MT")
+  //   .attr("font-size", function(d) {
+  //     return d.r / 2;
+  //   })
+  //   .attr("fill", "#402F2F");
+
+  // svg.append("g")
+  //   .attr("class", "legendOrdinal")
+  //   .attr("transform", "translate(600,40)");
+  //
+  // var legendOrdinal = d3.legendColor()
+  //   .shape("path", d3.symbol().type(d3.symbolSquare).size(150)())
+  //   .shapePadding(10)
+  //   .scale(color);
+  //
+  // svg.select(".legendOrdinal")
+  //   .call(legendOrdinal);
+
+  // var diameter = 420;
+  // var height = 420;
+  // var color = d3.scaleOrdinal(d3.schemeSet2);
+  //
+  //
+  // var bubble = d3.pack(dataset)
+  //   .size([diameter, height])
+  //   .padding(0);
+  //
+  // var svg = d3.select("#bubblechart")
+  //   .append("svg")
+  //   .attr("width", diameter)
+  //   .attr("height", height)
+  //   //  .attr('display','inline-block')
+  //   .attr("align", "center");
+  // //.attr("preserveAspectRatio", "xMinYMin meet")
+  // //.attr("viewBox", "0 0 300 300")
+  // //.classed("svg-content", true);
+  //
+  // var nodes = d3.hierarchy(dataset)
+  //   .sum(function(d) {
+  //     return d.Count;
+  //   });
+  //
+  // var node = svg.selectAll(".node")
+  //   .data(bubble(nodes).descendants())
+  //   .enter()
+  //   .filter(function(d) {
+  //     return !d.children
+  //   })
+  //   .append("g")
+  //   .attr("class", "node")
+  //   .attr("transform", function(d) {
+  //     return "translate(" + d.x + "," + d.y + ")";
+  //   });
+  //
+  // node.append("title")
+  //   .text(function(d) {
+  //     return d.Name + ": " + d.Count;
+  //   });
+  //
+  // node.append("circle")
+  //   .attr("r", function(d) {
+  //     return d.r;
+  //   })
+  //   .style("fill", function(d, i) {
+  //
+  //     // return color(i);
+  //     if (d.data.Count <= 1000) {
+  //       return "#DB69AA"
+  //
+  //     } else {
+  //       return "#d0d0d0"
+  //     }
+  //
+  //   });
+  //
+  // node.append("text")
+  //   .attr("dy", ".2em")
+  //   .style("text-anchor", "middle")
+  //   .text(function(d) {
+  //     return d.data.Name.substring(0, d.r / 2);
+  //   })
+  //   .attr("font-family", "sans-serif")
+  //   .attr("font-size", function(d) {
+  //     return d.r / 3;
+  //   })
+  //   .attr("fill", "#402F2F");
+  //
+  // node.append("text")
+  //   .attr("dy", "1.3em")
+  //   .style("text-anchor", "middle")
+  //   .text(function(d) {
+  //     return d.data.Count;
+  //   })
+  //   .attr("font-family", "Gill Sans", "Gill Sans MT")
+  //   .attr("font-size", function(d) {
+  //     return d.r / 2;
+  //   })
+  //   .attr("fill", "#402F2F");
+  //
+  // d3.select(self.frameElement)
+  //   .style("height", height + "px");
+  //
+  //
+  //
+  //
+  // var color = d3.scaleOrdinal(d3.schemeSet2);
+  //
+  // var bubble = d3.pack(dataset)
+  //   .size([diameter, height])
+  //   .padding(0);
+  //
+  // var node = svg.selectAll(".node")
+  //   .data(bubble(nodes).descendants())
+  //   .enter()
+  //   .filter(function(d) {
+  //     return !d.children
+  //   })
+  //   .append("g")
+  //   .attr("class", "node")
+  //   .attr("transform", function(d) {
+  //     return "translate(" + d.x + "," + d.y + ")";
+  //   });
+  //
+  //
+  // $("#bubblelegend").append('<tr><td>' + labels[0] + '</td><td>' + sum_label_0 + '</td><td>' + labels[1] + '</td><td>' + sum_label_1 + '</td></tr>');
+  // $("#bubblelegend").append('<tr><td>' + labels[2] + '</td><td>' + sum_label_2 + '</td><td>' + labels[3] + '</td><td>' + sum_label_3 + '</td></tr>');
+  // $("#bubblelegend").append('<tr><td>' + labels[4] + '</td><td>' + sum_label_4 + '</td><td>' + labels[5] + '</td><td>' + sum_label_5 + '</td></tr>');
+  // $("#bubblelegend").append('<tr><td>' + labels[6] + '</td><td>' + sum_label_6 + '</td><td>' + labels[7] + '</td><td>' + sum_label_7 + '</td></tr>');
+  // $("#bubblelegend").append('<tr><td>' + labels[8] + '</td><td>' + sum_label_8 + '</td><td>' + labels[9] + '</td><td>' + sum_label_9 + '</td></tr>');
+  // $("#bubblelegend").append('<tr><td>' + labels[10] + '</td><td>' + sum_label_10 + '</td><td></td><td></td></tr>');
 
   /*function resize() {
     initialWidth = document.getElementById('bubblechart').clientWidth;
@@ -658,13 +991,13 @@ function DrawPolLeaningChart(jsonData, idx) {
   let totposts = get_values(result[0]);
   const tot_n = totposts[0],
     tot_keys = totposts[1];
-//  console.log("totals", tot_n)
+  //  console.log("totals", tot_n)
 
   //each_topic_result
   let labs = get_values(result[2]);
   const labels = labs[0],
     labels_keys = labs[1];
-//  console.log("labels", labels)
+  //  console.log("labels", labels)
   //data 8-1
   //conservative
   let cons = get_values(result[11]);
@@ -719,128 +1052,112 @@ function DrawPolLeaningChart(jsonData, idx) {
     //  }
     //  console.log('the_labels: ', labels)
     //  console.log("conservatives:", con_n)
-    // political leaning chart
-    var barOptions_stacked = {
-      tooltips: {
-        enabled: true
-      },
-      responsive: true,
-      maintainAspectRatio: true,
-      layout: {
-        padding: {
-          left: 0,
-          right: 0,
-          top: 20,
-          bottom: 0
-        }
-      },
-
-      hover: {
-        animationDuration: 0
-      },
-      scales: {
-        xAxes: [{
-          ticks: {
-            beginAtZero: true,
-            fontFamily: "sans-serif",
-            fontSize: 10
-          },
-          scaleLabel: {
-            display: false
-          },
-          gridLines: {},
-          stacked: true
-        }],
-        yAxes: [{
-          gridLines: {
-            display: false,
-            color: "#000",
-            zeroLineColor: "#000",
-            zeroLineWidth: 0
-          },
-          ticks: {
-            fontFamily: "sans-serif",
-            fontSize: 10
-          },
-          stacked: true
-        }]
-      },
-      legend: {
-        display: true
-      },
-
-      /*    animation: {
-            onComplete: function() {
-              var chartInstance = this.chart;
-              var ctx = chartInstance.ctx;
-              ctx.textAlign = "center";
-
-              ctx.textBaseline = 'top';
-          //    ctx.font = "16px Open Sans";
-              ctx.fillStyle = "#ffffff";;
-
-              Chart.helpers.each(this.data.datasets.forEach(function(dataset, i) {
-                var meta = chartInstance.controller.getDatasetMeta(i);
-                Chart.helpers.each(meta.data.forEach(function(bar, index) {
-                  data = dataset.data[index];
-                  console.log("i vale", i)
-                  if (i == 0) {
-                    ctx.fillText(data, bar._model.x , bar._model.y + 4);
-                  } else
-                   {
-                     if (i==1){
-                    ctx.fillText(data, bar._model.x -50, bar._model.y + 4);
-                  }
-                  else {
-
-                          ctx.fillText(data, bar._model.x - 10, bar._model.y + 4);
-
-                  }
-                  }
-                }), this)
-              }), this);
-            }
-          }, */
-      pointLabelFontFamily: "Quadon Extra Bold",
-      scaleFontFamily: "Quadon Extra Bold",
-    };
+    //    var barOptions_stacked =
 
 
 
     var ctx = document.getElementById("pol_leaning");
     myChart = new Chart(ctx, {
-      type: 'horizontalBar',
+      type: 'bar',
       data: {
         //  labels: ["2014", "2013", "2012", "2011","2010","2009","2008","2007","2006","2005","2004"],
         labels: labels,
-
         datasets: [{
           label: 'Conservative',
           //data: [727, 589, 537, 543, 574,345,727, 589, 537, 543, 574],
           data: percent_con,
-          backgroundColor: "rgba(204,0,0,1)",
-          hoverBackgroundColor: "rgba(255,0,0,1)"
+          backgroundColor: "#E4959E",
+          hoverBackgroundColor: "#D55D6B"
         }, {
           label: 'Neutral',
           //  data: [238, 553, 746, 884, 903,323,727, 589, 537, 543, 574],
           data: percent_neu,
-          backgroundColor: "rgba(153,163,164,1)",
+          backgroundColor: "#D0D0D0",
           hoverBackgroundColor: "rgba(121,125,127,1)"
         }, {
           label: 'Liberal',
           //data: [1238, 553, 746, 884, 903,222,727, 589, 537, 543, 574],
           data: percent_lib,
-          backgroundColor: "rgba(0,0,255,1)",
-          hoverBackgroundColor: "rgba(0,102,255,1)"
+          backgroundColor: "#72A3FF",
+          hoverBackgroundColor: "#337AFF"
         }, ]
       },
 
-      options: barOptions_stacked,
+
+      options: {
+        indexAxis: 'y',
+        tooltips: {
+          enabled: true
+        },
+        responsive: true,
+        maintainAspectRatio: true,
+        layout: {
+          padding: {
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0
+          }
+        },
+
+        hover: {
+          animationDuration: 0
+        },
+        scales: {
+          x: {
+            stacked: true,
+          },
+          y: {
+            stacked: true
+          },
+          xAxes: [{
+            ticks: {
+              beginAtZero: true,
+              fontFamily: "sans-serif",
+              fontSize: 10,
+              fontColor: "#b1b0b0",
+            },
+            //    scaleLabel: {
+            //      display: false
+            //    },
+
+          }],
+          yAxes: [{
+            gridLines: {
+              display: true,
+              color: "#f1f3f9",
+              zeroLineColor: "#f1f3f9",
+              fontColor: "#b1b0b0",
+              zeroLineWidth: 0
+            },
+            barPercentage: 1,
+            categoryPercentage: .7,
+            ticks: {
+              fontColor: "#000",
+              fontFamily: "sans-serif",
+              fontSize: 14,
+
+              //  mirror: true,
+              //  padding: 100
+
+            },
+
+          }]
+        },
+
+
+        pointLabelFontFamily: "sans-serif",
+        scaleFontFamily: "sans-serif" //"Quadon Extra Bold",
+      },
+      //end pol chart
+
     }); //end pol chart
 
   }
 
 }; //end pol_chart
+//document.querySelector('#pol_leaning_legend').innerHTML = myChart.generateLegend();
+
 
 function checInfinite(num) {
 
@@ -873,7 +1190,7 @@ function calculate_void(jsonData, idx, topic) {
     array_types.push(tot_types[idx][i])
 
   }
-//  console.log("array types", array_types)
+  //  console.log("array types", array_types)
 
   // [politics,media, citizens]
   //  var num_political_posts = array_data[0];
@@ -936,8 +1253,21 @@ function DrawBarChart(jsonData, idx) {
     array_types.push(tot_types[idx][i])
 
   }
-//  console.log("array types", array_types)
+  //  console.log("array types", array_types)
+  //Select color according to the number of posts_keys
+  var min_arr = Math.min.apply(Math, array_types);
+  types_colors = [];
+  for (i = 0; i < array_types.length; i++) {
 
+    if (array_types[i] == min_arr) {
+
+      types_colors.push('#DB69AA');
+
+    } else {
+      types_colors.push('#D0D0D0');
+
+    }
+  }
 
 
 
@@ -973,32 +1303,39 @@ function DrawBarChart(jsonData, idx) {
           label: 'Number Posts',
           //data: perc_bot,
           data: array_types,
-          backgroundColor: '#444444'
+          backgroundColor: types_colors,
+          datalabels: {
+            color: "#000",
+            anchor: "end",
+            align: "top"
+
+          }
         }]
       },
+      plugins: [ChartDataLabels],
       options: {
         hover: {
           animationDuration: 0
         },
-        animation: {
-          duration: 0,
-          onComplete: function() {
-            var chartInstance = this.chart,
-              ctx = chartInstance.ctx;
+        //      animation: {
+        //          duration: 0,
+        //        onComplete: function() {
+        //          var chartInstance = this.chart,
+        ///            ctx = chartInstance.ctx;
 
-            ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'bottom';
+        //          ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+        //          ctx.textAlign = 'center';
+        //          ctx.textBaseline = 'bottom';
 
-            this.data.datasets.forEach(function(dataset, i) {
-              var meta = chartInstance.controller.getDatasetMeta(i);
-              meta.data.forEach(function(bar, index) {
-                var data = dataset.data[index];
-                ctx.fillText(data, bar._model.x, bar._model.y - 5);
-              });
-            });
-          }
-        },
+        //          this.data.datasets.forEach(function(dataset, i) {
+        //          var meta = chartInstance.controller.getDatasetMeta(i);
+        //          meta.data.forEach(function(bar, index) {
+        //            var data = dataset.data[index];
+        //            ctx.fillText(data, bar._model.x, bar._model.y - 5);
+        //          });
+        //      });
+        //      }
+        //    },
         legend: {
           display: false
         },
@@ -1101,9 +1438,17 @@ function DrawTopicsChart(jsonData) {
   var perc_comments = cms[0],
     comm_keys = cms[1];
   //share percentage
-  let engp = get_values(result[10])
-  var perc_eng = engp[0],
-    eng_keys = engp[1];
+
+
+  let shares = get_values(result[10]) //share percentage
+  var perc_shares = shares[0],
+    eng_keys = shares[1];
+
+  perc_shares = perc_shares.map(function(x) {
+    return (x * 100).toFixed(2);
+  })
+  console.log("shares", perc_shares);
+
 
   perc_posts = perc_posts.map(function(x) {
     return (x * 100).toFixed(2);
@@ -1114,9 +1459,21 @@ function DrawTopicsChart(jsonData) {
   perc_comments = perc_comments.map(function(x) {
     return (x * 100).toFixed(2);
   })
-  perc_eng = perc_eng.map(function(x) {
-    return (x * 100).toFixed(2);
-  })
+  //  perc_eng = perc_eng.map(function(x) {
+  //    return (x * 100).toFixed(2);
+  //  })
+
+  console.log("perc_comments", perc_comments)
+  var perc_color = []
+  for (let i = 0; i < perc_comments.length; i++) {
+    if (perc_comments[i] < 1) {
+      perc_color.push("#DB69AA")
+    } else {
+
+      perc_color.push("#D0D0D0")
+    }
+  }
+  console.log("perc_color", perc_color)
 
   /* Let's calculate the maximun value for the y-axis
   var max_perc_posts = Math.max.apply(Math, perc_posts);
@@ -1133,151 +1490,117 @@ function DrawTopicsChart(jsonData) {
   //console.log("percentage posts", max_y_axis )
 
   /* This is the topics chart*/
-  if (AudienceChart) {
-    AudienceChart.destroy();
-  }
-  var AudienceChartCanvas = $("#audience-chart").get(0).getContext("2d");
-  var AudienceChart = new Chart(AudienceChartCanvas, {
-    type: 'horizontalBar',
-    data: {
-      labels: labels,
-      datasets: [
-        //    {
-        //      type: 'line',
-        //      fill: false,
-        //      data: [100, 230, 130, 140, 270, 140],
-        //      borderColor: '#ff4c5b'
-        //    },
-        //    {
-        //      label: 'Posts',
-        //      data: perc_posts,
-        //      backgroundColor: '#6640b2'
-        //    },
-        //    {
-        //      label: 'Like',
-        //      data: perc_likes,
-        //      backgroundColor: '#1cbccd'
-        //    },
-        {
-          label: 'Comments Percentage',
-          data: perc_comments,
-          backgroundColor: '#F1C40F'
-        },
-        {
-          label: 'Posts Percentage',
-          data: perc_posts,
-          backgroundColor: '#FF6600'
-        }
-      ]
-    },
-    options: {
-      /*    "hover": {
-                "animationDuration": 0
-            },
-            "animation": {
-                "duration": 1,
-                "onComplete": function () {
-                    var chartInstance = this.chart,
-                    ctx = chartInstance.ctx;
 
-                    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
-                    ctx.textAlign = 'left';
-                    ctx.textBaseline = 'bottom';
+  ///COVERAGE PER TOPIC OLD GRAPH
 
-                    this.data.datasets.forEach(function (dataset, i) {
-                        var meta = chartInstance.controller.getDatasetMeta(i);
-                        meta.data.forEach(function (bar, index) {
-                            var data = dataset.data[index];
-                            ctx.fillText(data, bar._model.x + 10, bar._model.y +10);
-                        });
-                    });
-                }
-            }, */
-      legend: {
-        "display": false
-      },
-      tooltips: {
-        "enabled": true
-      },
+  //  if (AudienceChart) {
+  //    AudienceChart.destroy();
+  //  }
+  //  var AudienceChartCanvas = $("#audience-chart").get(0).getContext("2d");
+  //   var AudienceChartCanvas = $("#myChart").get(0).getContext("2d");
+  //   var AudienceChart = new Chart(AudienceChartCanvas, {
+  //     type: 'bar',
+  //     data: {
+  //       labels: labels,
+  //       datasets: [
+  //
+  //         {
+  //
+  //           label: 'Comments Percentage',
+  //           data: perc_comments,
+  //           backgroundColor: '#FCB0DE'
+  //         },
+  //         {
+  //           label: 'Shares Percentage',
+  //           data: perc_posts,
+  //           backgroundColor: '#9B82C4'
+  //         }
+  //       ]
+  //     },
+  //     options: {
+  //
+  //
+  // indexAxis: 'y',
+  //
+  //       responsive: true,
+  //       maintainAspectRatio: true,
+  //       layout: {
+  //         padding: {
+  //           left: 0,
+  //           right: 0,
+  //           top: 0,
+  //           bottom: 0
+  //         },
+  //
+  //       },
+  //       scales: {
+  //         yAxes: [{
+  //           display: true,
+  //           gridLines: {
+  //             display: true,
+  //             drawBorder: false,
+  //             color: "#f8f8f8",
+  //             zeroLineColor: "#f8f8f8",
+  //
+  //           },
+  //           ticks: {
+  //             display: true,
+  //             stepSize: 100,
+  //             fontColor: "#000",
+  //             fontFamily: "sans-serif",
+  //             fontSize: 14,
+  //             mirror: true,
+  //             padding: 100
+  //
+  //           }
+  //         }],
+  //         xAxes: [{
+  //           stacked: false,
+  //           ticks: {
+  //             min: 0, //Remove this if you use type of char 'bar' instead of 'horizontalbar'
+  //             max: 100,
+  //             beginAtZero: true,
+  //             fontColor: "#b1b0b0",
+  //             fontSize: 10
+  //           },
+  //           gridLines: {
+  //             color: "#f1f3f9",
+  //             display: true
+  //           },
+  //           barPercentage: 1,
+  //           categoryPercentage: .7,
+  //         }]
+  //       },
+  //
+  //       elements: {
+  //         point: {
+  //           radius: 3,
+  //           backgroundColor: '#ff4c5b'
+  //         }
+  //       },
+  //       legendCallback: function(chart, labels) {
+  //         //  console.log("xxxx",Object.keys(chart.data.datasets).length);
+  //         var text = [];
+  //         //First we obtain the size of the json where the labels from the graph come
+  //         for (i = 0; i < Object.keys(chart.data.datasets).length; i++) {
+  //
+  //           text.push('<div class="item mr-2 d-flex align-items-center ">');
+  //           text.push('<div class="item-box mr-2" style=" background-color: ' + chart.data.datasets[i].backgroundColor + ' "></div><p class="text-black mb-0"> ' + chart.data.datasets[i].label + '</p>');
+  //           text.push('</div>');
+  //         }
+  //         return text.join('');
+  //       }
+  //     },
+  //   });
 
-      responsive: true,
-      maintainAspectRatio: true,
-      layout: {
-        padding: {
-          left: 0,
-          right: 0,
-          top: 20,
-          bottom: 0
-        },
+  ///COVERAGE PER TOPIC OLD GRAPH
 
-      },
-      scales: {
-        yAxes: [{
-          display: true,
-          gridLines: {
-            display: true,
-            drawBorder: false,
-            color: "#f8f8f8",
-            zeroLineColor: "#f8f8f8"
-          },
-          ticks: {
-            display: true,
-            //    min: 0, //This is used if bartype is  'bar'
-            //  max: 100,
-            stepSize: 100,
-            //  font-family: "Source Sans Pro", "sans-serif",
-            fontColor: "#000",
-            fontFamily: "sans-serif",
-            fontSize: 14,
-            padding: 10
-          }
-        }],
-        xAxes: [{
-          stacked: false,
-          ticks: {
-            min: 0, //Remove this if you use type of char 'bar' instead of 'horizontalbar'
-            max: 100,
-            beginAtZero: true,
-            fontColor: "#b1b0b0",
-            fontSize: 10
-          },
-          gridLines: {
-            color: "rgba(0, 0, 0, 0)",
-            display: false
-          },
-          barPercentage: .9,
-          categoryPercentage: .7,
-        }]
-      },
-      legend: {
-        display: false
-      },
-      elements: {
-        point: {
-          radius: 3,
-          backgroundColor: '#ff4c5b'
-        }
-      },
-      legendCallback: function(chart, labels) {
-        //  console.log("xxxx",Object.keys(chart.data.datasets).length);
-        var text = [];
-        //First we obtain the size of the json where the labels from the graph come
-        for (i = 0; i < Object.keys(chart.data.datasets).length; i++) {
-
-          text.push('<div class="item mr-2 d-flex align-items-center ">');
-          text.push('<div class="item-box mr-2" style=" background-color: ' + chart.data.datasets[i].backgroundColor + ' "></div><p class="text-black mb-0"> ' + chart.data.datasets[i].label + '</p>');
-          text.push('</div>');
-        }
-        return text.join('');
-      }
-    },
-  });
-  document.querySelector('#audience-chart-legend').innerHTML = AudienceChart.generateLegend();
+  //  document.querySelector('#audience-chart-legend').innerHTML = AudienceChart.generateLegend();
 
   let botp = get_values(result[17])
   var perc_bot = botp[0],
     bot_keys = botp[1];
-//  console.log("perc", perc_bot)
+  //  console.log("perc", perc_bot)
   perc_bot = perc_bot.map(function(x) {
     return (x * 100).toFixed(2);
   })
@@ -1289,106 +1612,120 @@ function DrawTopicsChart(jsonData) {
     if (taskChart) {
       taskChart.destroy();
     }
+    const data = {
+      labels: labels,
+      datasets: [{
+        label: 'Percentage Bots',
+        data: perc_bot,
+        backgroundColor: ["#FFADAD", "#FFD6A5", "#FDFFB6", "#CAFFBF", "#9BF6FF", "#A0C4FF", "#BDB2FF", "#FFC6FF", "#DB94D3", "#F269A2", "#9089FB"]
+      }]
+    };
     var taskChart = new Chart(taskChartCanvas, {
-      type: 'horizontalBar',
-      data: {
-        labels: labels,
-        datasets: [{
-          label: 'Percentage Bots',
-          data: perc_bot,
-          backgroundColor: '#9955BB'
-        }]
-      },
+      type: 'polarArea',
+      data: data,
       options: {
-        tooltips: {
-          enabled: true
-        },
         responsive: true,
-        maintainAspectRatio: true,
-        layout: {
-          padding: {
-            left: 0,
-            right: 0,
-            top: 20,
-            bottom: 0
-          }
-        },
         scales: {
-          yAxes: [{
-            display: true,
-            gridLines: {
-              drawBorder: false,
-              color: '#f1f3f9',
-
-              display: true,
-              zeroLineColor: '#f1f3f9'
-            },
+          r: {
             ticks: {
               display: true,
-              //    min: 0, //This is used if bartype is  'bar'
-              //  max: 1,
-              stepSize: 100,
-              //  font-family: "Source Sans Pro", "sans-serif",
-              fontColor: "#000",
-              fontFamily: "sans-serif",
-              fontSize: 14,
-              padding: 10
+              //  backdropColor: 'transparent',
+              mirror: true,
+              z: 1, // Remove vertical numbers
+              font: {
+                fontColor: "#d0d0d0",
+                fontStyle: 'bold',
+                size: 16
+              },
+            },
+            pointLabels: {
+              display: true,
+              centerPointLabels: true,
+              font: {
+                size: 16
+              }
             }
-          }],
-        //  xAxes: [{
-      //      display: true,
-      //      stacked: false,
-      //      categoryPercentage: 1,
-      //      ticks: {
-      //        display: false,
-      //        beginAtZero: false,
-      //        display: true,
-      //        padding: 10,
-      //        fontSize: 11
-      //      },
-      //      gridLines: {
-      //        color: "rgba(0, 0, 0, 0)",
-      //        display: true
-      //      },
-      //      position: 'bottom',
-      //      barPercentage: 0.7
-      //    }]
-      xAxes: [{
-        stacked: false,
-        ticks: {
-          min: 0, //Remove this if you use type of char 'bar' instead of 'horizontalbar'
-          max: 100,
-          beginAtZero: true,
-          fontColor: "#b1b0b0",
-          fontSize: 10
-        },
-        gridLines: {
-          color: "rgba(0, 0, 0, 0)",
-          display: false
-        },
-        barPercentage: .9,
-        categoryPercentage: .7,
-      }]
-        },
-        legend: {
-          display: false
-        },
-        elements: {
-          point: {
-            radius: 0
           }
         },
+        plugins: {
+          legend: {
+            display: false,
+            position: 'top',
+          },
 
-      }
+        }
+      },
+
+
     });
+
 
 
   } //Finish chart
 
+  if (EngagementChart) {
+    EngagementChart.destroy();
+  }
+  var EngagementChart = document.getElementById("audience-chart");
+  let chart = new Chart(EngagementChart, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+          //    xAxisID: 'percent_comments', // X axis 1
+          data: perc_shares,
+          label: "Percentage Shares",
+          backgroundColor: "#0040E3",
+          borderColor: '#0040E3',
+          //      categoryPercentage: 0.8,
+        },
+        {
+          type: 'bar', // line type dataset
+          //  xAxisID: 'shares', // X axis 2
+          data: perc_comments,
+          label: "Percentage Comments",
+          backgroundColor: perc_color,
+          borderColor: 'rgba(247, 148, 30, 1)',
+          fill: false
+        },
+
+      ]
+    },
+
+    options: {
+      indexAxis: 'y', // this changes the orientation for all datasets in v3
+      responsive: true,
+      legend: {
+        align: 'start',
+        //    labels: {
+        //      usePointStyle: true
+        //      },
+        //      position: 'top'
+      },
+      scales: {
+        y: {
+
+          ticks: {
+            min: 0, //Remove this if you use type of char 'bar' instead of 'horizontalbar'
+            max: 100,
+            beginAtZero: true,
+            fontColor: "#b1b0b0",
+            fontSize: 10
+
+          },
+          gridLines: {
+            display: false
+          },
+
+        },
+
+      }
+    }
+  })
+
+  //BUBBLE Chart
 
 
 
-
-
-
+  //BUBBLE Chart
 };

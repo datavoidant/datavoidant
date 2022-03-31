@@ -18485,18 +18485,125 @@ input:focus {
   outline: none;
 }
 
+/*BUBBLE CHART*/
+/* text {
+  font: 16px sans-serif;
+  fill: #000;
+  transition: all 0.3s;
+} */
+
+.label {
+  fill: #000;
+}
+
+.chart {
+  max-width: 600px;
+  max-height: 600px;
+}
+
+.chart-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.node {
+  @for $i from 1 through 30 {
+    &:nth-child(#{$i}) .graph {
+      $delay: $i * 0.075s;
+      animation-delay: $delay;
+    }
+  }
+}
+
+.graph {
+  opacity: 0;
+  animation-name: animateIn;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes animateIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.6) rotate(-15deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+/*BUUBLE CHART*/
+
+.c_label {
+    display:inline-block;
+    color:#fff;
+    border:0.5px solid #CCC;
+    background:#E4959E;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    vertical-align:middle;
+    max-width: 300px;
+    width:100%;
+    padding: 10px;
+    text-align: center;
+}
+
+.c_button {
+  background-color:#E4959E;
+  border:0.5px solid #CCC;
+  color: white;
+}
+
+.n_button {
+  background-color:#D0D0D0;
+  border:0.5px solid #CCC;
+  color: #535865;
+}
+
+.l_button {
+  background-color:#72A3FF;
+  border:0.5px solid #CCC;
+  color: white;
+}
+
+.n_label {
+    display:inline-block;
+    color:#535865;
+    border:0.5px solid #CCC;
+    background:#D0D0D0;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    vertical-align:middle;
+    max-width: 300px;
+    width:100%;
+    padding: 10px;
+    text-align: center;
+}
+
+.l_label {
+    display:inline-block;
+    color:#fff;
+    border:0.5px solid #CCC;
+    background:#72A3FF;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    vertical-align:middle;
+    max-width: 300px;
+    width:100%;
+    padding: 10px;
+    text-align: center;
+}
+
 .bg-neutral {
-  border-color: #99A3A4;
+  border-color: #D0D0D0;
   border-width: 20px;
 }
 
 .bg-liberal {
-  border-color: #1600FF;
+  border-color: #72A3FF;
   border-width: 20px;
 }
 
 .bg-conservative {
-  border-color: #CC0000;
+  border-color: #E4959E;
   border-width: 20px;
 
 }
@@ -20773,7 +20880,7 @@ dl li {
   -webkit-transition: background 0.25s ease;
   -moz-transition: background 0.25s ease;
   -ms-transition: background 0.25s ease;
-  background: url(../images/other/navbar-cover.jpg) center center no-repeat;
+  background: url(../images/other/navbar-cover2.png) center center no-repeat;
   background-size: cover;
   height: 102px;
   width: auto;

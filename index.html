@@ -8,6 +8,7 @@
   <title>Spica Admin</title>
   <!-- base:css -->
   <link rel="stylesheet" href="vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
   <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
   <!-- endinject -->
   <!-- plugin css for this page -->
@@ -16,7 +17,9 @@
   <link rel="stylesheet" href="css/style.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="images/favicon.png" />
-  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <!--script src="https://d3js.org/d3.v4.min.js"></script-->
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="//d3js.org/d3-scale-chromatic.v0.3.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
 </head>
 
@@ -37,18 +40,18 @@
 
           </a>
         </li>
-        <li class="nav-item">
+        <!--li class="nav-item">
           <a class="nav-link hoverReveal2" href="#">
             <i class="mdi mdi-view-headline menu-icon"></i>
             <span class="menu-title">Summarized Topics</span>
           </a>
-        </li>
-        <li class="nav-item hoverReveal3">
+        </li-->
+        <!--li class="nav-item hoverReveal3">
           <a class="nav-link" href="#">
             <i class="mdi mdi-chart-pie menu-icon"></i>
             <span class="menu-title">Info per Topic</span>
           </a>
-        </li>
+        </li-->
       </ul>
     </nav>
     <script>
@@ -87,6 +90,7 @@
           }
         ),
 
+
         //   Hover reveal for wrapper 3
         $('.hoverReveal3').click(
           function() {
@@ -103,8 +107,11 @@
 
           }
 
+
+
         );
     </script>
+
     <!-- partial -->
     <div class="container-fluid page-body-wrapper active-hoverReveal">
       <!-- partial:./partials/_navbar.html -->
@@ -120,6 +127,11 @@
               <option value="default">Select Topic</option>
             </select>
           </div>
+          <div class="navbar-menu-wrapper d-flex align-items-center justify-content-center">
+            <!--a class="navbar-brand brand-logo" href="index.html"><img src="images/logo.svg" alt="logo" /></a>
+            <a class="navbar-brand brand-logo-mini" href="index.html"><img src="images/logo-mini.svg" alt="logo" /></a-->
+            <h1 style="text-align:right;">Datavoidant</h1>
+          </div>
           <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1"></h4>
           <ul class="navbar-nav navbar-nav-right">
           </ul>
@@ -129,7 +141,7 @@
           <!--upload files-->
 
           <input type="file" id="real-file" hidden="hidden" />
-          <button type="button" id="custom-button" class="navbar-toggler navbar-toggler-left"  data-toggle="offcanvas">
+          <button type="button" id="custom-button" class="navbar-toggler navbar-toggler-left" data-toggle="offcanvas">
             <span class="mdi mdi-settings ">
           </button>
           <script>
@@ -166,6 +178,25 @@
             }
           </script>
           <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+          <script>
+            $(document).ready(function() {
+              $('.toggle').click(function() {
+
+                var collapse_content_selector = $(this).attr('href');
+                console.log("selector", collapse_content_selector)
+
+                var toggle_switch = $(this);
+                $(collapse_content_selector).toggle(function() {
+                  if ($(this).css('display') == 'none') {
+                    toggle_switch.html('Show');
+                  } else {
+                    toggle_switch.html('Hide');
+                  }
+                });
+              });
+
+            });
+          </script>
 
           <div class="row">
             <!-- main row-->
@@ -185,12 +216,27 @@
                       <!--First column holding first and second row-->
                       <div class="row">
                         <!--FirstRow-->
-                        <div class="col-md-6 grid-margin stretch-card summarized_topics" id="summarized1">
-                          <!--Pages and Groups Analyzed-->
-                          <div class="card rounded">
+
+
+
+                        <div class="col-md-6 grid-margin stretch-card summarized_topics" id="summarized3">
+                          <div class="card rounded ">
                             <div class="card-body">
-                              <p class="card-title">Groups and Pages Analyzed</p>
-                              <div class="table-responsive" style="height: 16rem;">
+                              <table class="table">
+                                <tbody>
+                                  <tr>
+                                    <td>
+                                        <p class="card-title notranslate"><i class="bi-command"> </i>Groups & Page Analyzed</p>
+
+                                    </td>
+                                    <td>
+                                        <button href="#insertDivID" class="toggle notranslate btn btn-sm btn-secondary n_button">Show</button>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+
+                              <div class="table-responsive" id="insertDivID" style="height: 16rem;display:none">
                                 <table id="table_all_pages" class="table_small_line  table-striped notranslate" style="table-layout: fixed">
                                   <thead></thead>
                                   <tbody></tbody>
@@ -203,34 +249,21 @@
                           <!--Types of Pages and Groups Analyzed-->
                           <div class="card rounded">
                             <div class="card-body">
-                              <p class="card-title" id="card-id-type"></p>
-                              <div id=='bar-chart-container' class='table table-responsive'>
-                                <canvas id="bar-charts" height="130"></canvas>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <!--Second Row-->
-                        <div class="col-md-6 grid-margin stretch-card summarized_topics" id="summarized2">
-                          <!--Bubble Chart Posts per Topic-->
-                          <div class="card rounded">
-                            <div class="card-body">
-                              <p class="card-title">Posts per Topic</p>
-                              <div style="float:left">
-                                <div id="bubblechart" style="height:130;"></div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-6 grid-margin stretch-card individual_topic" id="individual2">
-                          <!--Fequent groups and pages per Topic-->
-                          <div class="card rounded">
-                            <div class="card-body">
-                              <p class="card-title" id="card-id-groups"></p>
 
-                              <div class="table-responsive" style="height: 18rem;">
+                              <table class="table">
+                                <tbody>
+                                  <tr>
+                                    <td>
+                                        <p class="card-title notranslate" id="card-id-groups"><i class="bi-command"> </i></p>
+                                    </td>
+                                    <td>
+                                        <button href="#insertDivID2" class="toggle notranslate btn btn-sm btn-secondary n_button">Show</button>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+
+                              <div class="table-responsive" id="insertDivID2" style="height: 18rem;display:none">
                                 <table id="table_groups" class="table_small_line table-striped notranslate" style="table-layout: fixed">
                                   <thead></thead>
                                   <tbody></tbody>
@@ -241,17 +274,43 @@
                           </div>
                         </div>
                       </div>
+                      <div class="row">
+                        <!--Second Row-->
+                        <div class="col-md-6 grid-margin stretch-card summarized_topics" id="summarized2">
+                          <!--Bubble Chart Posts per Topic-->
+                          <div class="card rounded">
+                            <div class="card-body" id="card-bubble">
+                              <p class="card-title notranslate"><i class="bi-command"> </i>Posts per Topic</p>
+                              <div style="float:left">
+                                <!--div id="bubblechart" style="height:130;"></div-->
+                                  <div id="bubblechart"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6 grid-margin stretch-card individual_topic" id="individual2">
+                          <!--Fequent groups and pages per Topic-->
+                          <div class="card rounded">
+                            <div class="card-body">
+                              <p class="card-title notranslate" id="card-id-type"><i class="bi-command"> </i></p>
+                              <div id=='bar-chart-container' class='table table-responsive'>
+                                <canvas id="bar-charts" height="230"></canvas>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                     <!---end of first  column holding first and second row-->
-                    <div class="col-md-4 grid-margin stretch-card">
+                    <div class="col-md-4 grid-margin stretch-card shared_doc">
                       <!--column holding shared document-->
                       <!--second column holding last three rows-->
                       <div class="card rounded">
                         <div class="card-body">
-                          <p class="card-title">Shared Document</p>
+                          <p class="card-title notranslate"><i class="bi-command"> </i>Shared Document</p>
 
-                          <div style="height: 34rem;">
-                            <div id="doc" class="card-body">Write here </div>
+                          <div style="height: 30rem;">
+                            <div id="doc" class="card-body notranslate">Write here </div>
                           </div>
 
                         </div>
@@ -264,6 +323,7 @@
 
                   <div class="row">
                     <!--Row holding Last three columns-->
+                       <!--Row holding graphs and chat -->
                     <div class="col-md-8">
                       <!--First column holding Last three columns-->
                       <div class="row">
@@ -283,108 +343,88 @@
                           <!--Political Leaning-->
                           <div class="card rounded">
                             <div class="card-body">
-                              <div class="d-flex align-items-center justify-content-between flex-wrap">
-                                <p class="card-title">Political Leaning</p>
-                              </div>
-                              <canvas id="pol_leaning"></canvas>
+                              <p class="card-title notranslate"><i class="bi-command"> </i>Percentage Bots Per Topic</p>
+                              <!--div class="regional-chart-legend" id="audience-chart-legend"></div-->
+                              <canvas id="task-chart" height="160"></canvas>
+
                             </div>
                           </div>
                         </div>
-
-
-                        <div class="col-md-6 grid-margin stretch-card individual_topic" id="individual3">
-                          <!--Conservative Posts-->
-                          <div class="card rounded bg-conservative d-flex align-items-center text-white" id='card-id-c-posts'>
-                            <div class="bg-white" id="google_translate_element"></div>
-
-                            <div class="card-body2">
-                              <div align="center" id="title_table_c_posts"></div>
-                              <div class="d-flex flex-row align-items-center flex-wrap justify-content-md-center justify-content-xl-start">
-                                <div id="frequent_posts" class="table-responsive" style="height: 16rem;">
-                                  <table id="table_c_posts" class="table table-striped2 translate" style="table-layout: fixed;">
-
-                                    <tbody></tbody>
-                                  </table>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div> <!-- row end -->
-                      <div class="row">
-                        <!--Fourth Row-->
-                        <!--div class="col-md-6 grid-margin stretch-card summarized_topics" id="summarized4"><!-Political Leaning-->
-                        <!--div class="card rounded">
-                        <div class="card-body">
-                          <div class="d-flex align-items-center justify-content-between flex-wrap">
-                            <p class="card-title">Political Leaning</p>
-                          </div>
-                          <canvas id="pol_leaning"></canvas>
-                        </div>
-                      </div>
-                    </div-->
                         <div class="col-md-6 grid-margin stretch-card summarized_topics" id="summarized5">
                           <!--Coverage Per Topic-->
                           <div class="card rounded">
                             <div class="card-body">
-                              <p class="card-title">Coverage Per Topic</p>
+                              <p class="card-title notranslate"><i class="bi-command"> </i>Coverage Per Topic</p>
                               <div class="regional-chart-legend" id="audience-chart-legend"></div>
-                              <canvas id="audience-chart"></canvas>
+                              <canvas id="audience-chart" height="200"></canvas>
                             </div>
+
                           </div>
                         </div>
 
 
-                        <div class="col-md-6 grid-margin stretch-card individual_topic" id="individual4">
-                          <!--Neutral Posts-->
-                          <div class="card rounded bg-neutral d-flex align-items-center text-white" id="card-id-n-posts">
-                            <div class="card-body2">
-                              <div align="center" id="title_table_n_posts"></div>
-                              <div class="d-flex flex-row align-items-center flex-wrap justify-content-md-center justify-content-xl-start">
-                                <div id="frequent_posts" class="table-responsive" style="height: 16rem;">
-                                  <table id="table_n_posts" class="table table-striped2 translate" style="table-layout: fixed;">
-
-                                    <tbody></tbody>
-                                  </table>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      </div> <!-- row end -->
                       <div class="row">
 
-
-
-                        <!--Fifth Row-->
-                        <div class="col-md-6 grid-margin stretch-card summarized_topics" id="summarized6">
-                          <!--Coverage Per Topic-->
+                        <div class="col-md-6 grid-margin stretch-card summarized_topics" id="summarized1">
+                          <!--Political Leaning-->
                           <div class="card rounded">
                             <div class="card-body">
-                              <p class="card-title">Percentage Bots Per Topic</p>
-                              <div class="regional-chart-legend" id="audience-chart-legend"></div>
-                              <canvas id="task-chart"></canvas>
-
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-6 grid-margin stretch-card individual_topic" id="individual6">
-                          <!--Liberal Posts-->
-                          <div class="card rounded bg-liberal d-flex align-items-center text-white" id="card-id-l-posts">
-                            <div class="card-body2">
-                              <div align="center" id="title_table_l_posts"></div>
-                              <div class="d-flex flex-row align-items-center flex-wrap justify-content-md-center justify-content-xl-start">
-                                <div id="frequent_posts" class="table-responsive" style="height: 16rem;">
-                                  <table id="table_l_posts" class="table table-striped2 translate" style="table-layout: fixed;">
-
-                                    <tbody></tbody>
-                                  </table>
-                                </div>
+                              <div class="d-flex align-items-center justify-content-between flex-wrap">
+                                <p class="card-title notranslate"><i class="bi-command"> </i>Political Leaning</p>
                               </div>
+                              <div class="regional-chart-legend" id="pol_leaning_legend"></div>
+                              <canvas id="pol_leaning" height="200"></canvas>
                             </div>
                           </div>
                         </div>
-                      </div><!-- end fifith row-->
+                        <div class="col-md-6 grid-margin stretch-card individual_topic" id="individual3">
+
+
+                          <div class="card rounded">
+                            <div class="card-body">
+                              <p class="card-title notranslate"><i class="bi-command"> </i>Posts per Political Affiliation</p>
+                              <div class="bg-white" id="google_translate_element"></div>
+
+                              <table class="table">
+                                <tbody>
+                                  <tr>
+                                    <td>
+                                      <div class="c_label" align="center" id="title_table_c_posts"></div>
+                                    </td>
+
+                                    <td>
+                                      <button href="#insertDivID5" class="toggle notranslate btn btn-sm btn-secondary c_button">Show</button>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                        <div class="n_label" align="center" id="title_table_n_posts"></div>
+                                    </td>
+                                    <td>
+                                      <button href="#insertDivID3" class="toggle notranslate btn btn-sm btn-secondary n_button">Show</button>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                        <div class="l_label" align="center" id="title_table_l_posts"></div>
+                                    </td>
+
+                                    <td>
+                                      <button href="#insertDivID4" class="toggle notranslate btn btn-sm btn-secondary l_button">Show</button>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <!--end last row-->
+
                     </div>
                     <!--end first column holding last three rows-->
 
@@ -392,9 +432,9 @@
                       <!--second column holding last three rows-->
                       <div class="card rounded">
                         <div class="card-body">
-                          <p class="card-title">Chat</p>
+                          <p class="card-title notranslate">Chat</p>
 
-                          <div style="height: 100%;">
+                          <div style="height: 780px; width: 100%;">
                             <div id="rt-85731d0952a70ad9cdff2a08aed600cf"></div>
                             <script src="https://rumbletalk.com/client/?OJalfj~:"></script>
                           </div>
@@ -402,9 +442,74 @@
                         </div>
                       </div>
                     </div>
+                   <!--end row of chat and graphs 3,4 rows-->
                     <!--end scond column holdinn last three rows-->
+                    <div class="col-md-12 grid-margin stretch-card">
+                    <div class="row">
 
+                      <div class="col-md-4 grid-margin stretch-card" id="insertDivID5"  style="display:none">
 
+                        <div class="card rounded bg-conservative">
+                          <div class="card-body2">
+
+                            <div align="center" id="title_table_c_posts"></div>
+                            <div class="d-flex flex-row align-items-center flex-wrap justify-content-md-center justify-content-xl-start">
+                              <div id="frequent_posts" class="table-responsive" style="height: 16rem;">
+                                <table id="table_c_posts" class="table table-striped2 translate" style="table-layout: fixed;">
+
+                                  <tbody></tbody>
+                                </table>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+
+                      <!--Neutral Posts-->
+                      <div class="col-md-4 grid-margin stretch-card" id="insertDivID3" style="display:none">
+
+                        <div class="card rounded bg-neutral">
+                          <div class="card-body2">
+
+                            <div align="center" id="title_table_n_posts"></div>
+                            <div class="d-flex flex-row align-items-center flex-wrap justify-content-md-center justify-content-xl-start">
+                              <div id="frequent_posts" class="table-responsive" style="height: 16rem;">
+                                <table id="table_n_posts" class="table table-striped2 translate" style="table-layout: fixed;">
+
+                                  <tbody></tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="col-md-4 grid-margin stretch-card " id="insertDivID4" style="display:none">
+
+                        <div class="card rounded bg-liberal">
+                          <div class="card-body2">
+
+                            <div align="center" id="title_table_l_posts"></div>
+                            <div class="d-flex flex-row align-items-center flex-wrap justify-content-md-center justify-content-xl-start">
+                              <div id="frequent_posts" class="table-responsive" style="height: 16rem;">
+                                <table id="table_l_posts" class="table table-striped2 translate" style="table-layout: fixed;">
+
+                                  <tbody></tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--endcard-->
+
+                      <!--end mini row-->
+                      <!--Neutral Posts-->
+                    </div>
+
+<!--div id="chart" class="chart"></div-->
                   </div>
                 </div>
                 <!--end main section-->
@@ -448,17 +553,27 @@
       </div> <!-- page-body-wrapper ends -->
     </div>
     <!-- container-scroller -->
-    <div id="rt-85731d0952a70ad9cdff2a08aed600cf" data-floating="true" data-side="right" data-width="500" data-height="500"></div>
+    <div id="rt-85731d0952a70ad9cdff2a08aed600cf" data-floating="true" data-side="right" data-width="500" data-height="800"></div>
     <!--script src="https://rumbletalk.com/client/?OJalfj~:"></script-->
-
+    <script>
+      $('.clickGroups').click(
+        function() {
+          $('.summarized_topics').hide();
+        }
+      );
+    </script>
 
     <!-- base:js -->
     <script src="vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page-->
     <script src="vendors/chart.js/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.13.0/d3-legend.js"></script>
+
+
     <!-- End plugin js for this page-->
-    <!--FOR THE CHAT-->
+    <!--FOR THE -->
     <script src="https://js.pusher.com/4.0/pusher.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/vue"></script>
